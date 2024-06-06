@@ -27,6 +27,16 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    // Database collections
+    const productsCollection = client.db('navantis_pharma_db').collection('products');
+
+    //get all products api
+    app.get('/products', async (req, res) => {
+        const result = await productsCollection.find().sort({ _id: -1 }).toArray();
+        res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");

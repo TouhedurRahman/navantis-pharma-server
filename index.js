@@ -33,6 +33,12 @@ async function run() {
 
     //get all products api
     app.get('/products', async (req, res) => {
+        const result = await productsCollection.find().toArray();
+        res.send(result);
+    });
+
+    //get latest products api
+    app.get('/latest-products', async (req, res) => {
         const result = await productsCollection.find().sort({ _id: -1 }).toArray();
         res.send(result);
     });

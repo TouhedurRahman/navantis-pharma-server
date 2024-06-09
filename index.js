@@ -33,6 +33,7 @@ async function run() {
     const eventsCollection = client.db('navantis_pharma_db').collection('events');
     const careersCollection = client.db('navantis_pharma_db').collection('careers');
     const queriesCollection = client.db('navantis_pharma_db').collection('queries');
+    const applicationsCollection = client.db('navantis_pharma_db').collection('applications');
 
     //get all products api
     app.get('/products', async (req, res) => {
@@ -69,6 +70,14 @@ async function run() {
       const newQuery = req.body;
       newQuery.createdAt = new Date();
       const result = await queriesCollection.insertOne(newQuery);
+      res.send(result);
+    });
+
+    // add new application api
+    app.post('/applications', async (req, res) => {
+      const newApplication = req.body;
+      newApplication.createdAt = new Date();
+      const result = await applicationsCollection.insertOne(newApplication);
       res.send(result);
     });
 

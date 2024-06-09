@@ -30,24 +30,31 @@ async function run() {
     // Database collections
     const productsCollection = client.db('navantis_pharma_db').collection('products');
     const categoriesCollection = client.db('navantis_pharma_db').collection('categories');
+    const eventsCollection = client.db('navantis_pharma_db').collection('events');
 
     //get all products api
     app.get('/products', async (req, res) => {
-        const result = await productsCollection.find().toArray();
-        res.send(result);
+      const result = await productsCollection.find().toArray();
+      res.send(result);
     });
 
     //get latest products api
     app.get('/latest-products', async (req, res) => {
-        const result = await productsCollection.find().sort({ _id: -1 }).toArray();
-        res.send(result);
+      const result = await productsCollection.find().sort({ _id: -1 }).toArray();
+      res.send(result);
     });
 
     //get all categories api
     app.get('/categories', async (req, res) => {
       const result = await categoriesCollection.find().toArray();
       res.send(result);
-  });
+    });
+
+    //get all events api
+    app.get('/events', async (req, res) => {
+      const result = await eventsCollection.find().toArray();
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -61,9 +68,9 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send("✅ Database Successfully Connected!");
+  res.send("✅ Database Successfully Connected!");
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

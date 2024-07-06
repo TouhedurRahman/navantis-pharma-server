@@ -73,6 +73,12 @@ async function run() {
       res.send(result);
     });
 
+    //get all applications api
+    app.get('/applications', async (req, res) => {
+      const result = await applicationsCollection.find().toArray();
+      res.send(result);
+    });
+
     // add new application api
     app.post('/applications', async (req, res) => {
       const newApplication = req.body;

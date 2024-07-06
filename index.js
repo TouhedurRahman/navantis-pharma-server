@@ -73,6 +73,12 @@ async function run() {
       res.send(result);
     });
 
+    //get all queries api
+    app.get('/queries', async (req, res) => {
+      const result = await queriesCollection.find().toArray();
+      res.send(result);
+    });
+
     //get all applications api
     app.get('/applications', async (req, res) => {
       const result = await applicationsCollection.find().toArray();

@@ -53,6 +53,12 @@ async function run() {
       res.send(result);
     });
 
+    // get all only categories api
+    app.get('/only-categories', async (req, res) => {
+      const result = await categoriesCollection.find().project({ category: 1 }).toArray();
+      res.send(result);
+    })
+
     //get all events api
     app.get('/events', async (req, res) => {
       const result = await eventsCollection.find().toArray();

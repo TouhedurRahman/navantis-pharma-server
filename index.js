@@ -75,6 +75,14 @@ async function run() {
 			res.send(result);
 		})
 
+		// add a new event api
+		app.post('/event', async (req, res) => {
+			const newEvent = req.body;
+			newEvent.createdAt = new Date();
+			const result = await eventsCollection.insertOne(newEvent);
+			res.send(result);
+		});
+
 		//get all events api
 		app.get('/events', async (req, res) => {
 			const result = await eventsCollection.find().toArray();

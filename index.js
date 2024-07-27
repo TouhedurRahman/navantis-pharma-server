@@ -55,6 +55,14 @@ async function run() {
 			res.send(result);
 		});
 
+		// add a new category api
+		app.post('/category', async (req, res) => {
+			const newCategory = req.body;
+			newCategory.createdAt = new Date();
+			const result = await categoriesCollection.insertOne(newCategory);
+			res.send(result);
+		});
+
 		//get all categories api
 		app.get('/categories', async (req, res) => {
 			const result = await categoriesCollection.find().toArray();

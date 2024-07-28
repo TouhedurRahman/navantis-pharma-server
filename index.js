@@ -89,6 +89,14 @@ async function run() {
 			res.send(result);
 		});
 
+		// add a new circular api
+		app.post('/circular', async (req, res) => {
+			const newCircular = req.body;
+			newCircular.createdAt = new Date();
+			const result = await careersCollection.insertOne(newCircular);
+			res.send(result);
+		});
+
 		//get all careers api
 		app.get('/careers', async (req, res) => {
 			const result = await careersCollection.find().toArray();

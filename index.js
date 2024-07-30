@@ -127,6 +127,14 @@ async function run() {
 			res.send(result);
 		});
 
+		// delete career api
+		app.delete('/career/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: new ObjectId(id) };
+			const result = await careersCollection.deleteOne(query);
+			res.send(result);
+		});
+
 		// add new query api
 		app.post('/queries', async (req, res) => {
 			const newQuery = req.body;

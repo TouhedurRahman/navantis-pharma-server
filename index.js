@@ -81,7 +81,15 @@ async function run() {
 		app.get('/only-categories', async (req, res) => {
 			const result = await categoriesCollection.find().project({ category: 1 }).toArray();
 			res.send(result);
-		})
+		});
+
+		// delete category api
+		app.delete('/category/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: new ObjectId(id) };
+			const result = await categoriesCollection.deleteOne(query);
+			res.send(result);
+		});
 
 		// add a new event api
 		app.post('/event', async (req, res) => {

@@ -105,6 +105,14 @@ async function run() {
 			res.send(result);
 		});
 
+		// delete event api
+		app.delete('/event/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: new ObjectId(id) };
+			const result = await eventsCollection.deleteOne(query);
+			res.send(result);
+		});
+
 		// add a new circular api
 		app.post('/circular', async (req, res) => {
 			const newCircular = req.body;

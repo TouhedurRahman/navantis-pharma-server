@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 require('dotenv').config();
 const cors = require('cors');
@@ -52,6 +52,14 @@ async function run() {
 		//get latest products api
 		app.get('/latest-products', async (req, res) => {
 			const result = await productsCollection.find().sort({ _id: -1 }).toArray();
+			res.send(result);
+		});
+
+		// delete product api
+		app.delete('/product/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: new ObjectId(id) };
+			const result = await productsCollection.deleteOne(query);
 			res.send(result);
 		});
 

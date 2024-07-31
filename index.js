@@ -55,6 +55,25 @@ async function run() {
 			res.send(result);
 		});
 
+		// update product api
+		app.patch("/product/:id", async (req, res) => {
+			const id = req.params.id;
+			const updatedProduct = req.body;
+			const filter = { _id: new ObjectId(id) };
+			const options = { upsert: true };
+			const updatedDoc = {
+				$set: {
+					...updatedProduct,
+				}
+			}
+			const result = await productsCollection.updateOne(
+				filter,
+				updatedDoc,
+				options
+			);
+			res.send(result);
+		});
+
 		// delete product api
 		app.delete('/product/:id', async (req, res) => {
 			const id = req.params.id;

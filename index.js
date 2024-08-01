@@ -64,6 +64,7 @@ async function run() {
 			const updatedDoc = {
 				$set: {
 					...updatedProduct,
+					updatedAt: new Date(),
 				}
 			}
 			const result = await productsCollection.updateOne(
@@ -99,6 +100,26 @@ async function run() {
 		// get all only categories api
 		app.get('/only-categories', async (req, res) => {
 			const result = await categoriesCollection.find().project({ category: 1 }).toArray();
+			res.send(result);
+		});
+
+		// update category api
+		app.patch("/category/:id", async (req, res) => {
+			const id = req.params.id;
+			const updatedCategory = req.body;
+			const filter = { _id: new ObjectId(id) };
+			const options = { upsert: true };
+			const updatedDoc = {
+				$set: {
+					...updatedCategory,
+					updatedAt: new Date(),
+				}
+			}
+			const result = await categoriesCollection.updateOne(
+				filter,
+				updatedDoc,
+				options
+			);
 			res.send(result);
 		});
 

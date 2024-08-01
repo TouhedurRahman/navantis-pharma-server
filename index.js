@@ -145,6 +145,26 @@ async function run() {
 			res.send(result);
 		});
 
+		// update event api
+		app.patch("/event/:id", async (req, res) => {
+			const id = req.params.id;
+			const updatedEvent = req.body;
+			const filter = { _id: new ObjectId(id) };
+			const options = { upsert: true };
+			const updatedDoc = {
+				$set: {
+					...updatedEvent,
+					updatedAt: new Date(),
+				}
+			}
+			const result = await eventsCollection.updateOne(
+				filter,
+				updatedDoc,
+				options
+			);
+			res.send(result);
+		});
+
 		// delete event api
 		app.delete('/event/:id', async (req, res) => {
 			const id = req.params.id;

@@ -187,6 +187,26 @@ async function run() {
 			res.send(result);
 		});
 
+		// update career api
+		app.patch("/career/:id", async (req, res) => {
+			const id = req.params.id;
+			const updatedCareer = req.body;
+			const filter = { _id: new ObjectId(id) };
+			const options = { upsert: true };
+			const updatedDoc = {
+				$set: {
+					...updatedCareer,
+					updatedAt: new Date(),
+				}
+			}
+			const result = await careersCollection.updateOne(
+				filter,
+				updatedDoc,
+				options
+			);
+			res.send(result);
+		});
+
 		// delete career api
 		app.delete('/career/:id', async (req, res) => {
 			const id = req.params.id;

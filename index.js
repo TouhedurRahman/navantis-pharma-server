@@ -28,12 +28,25 @@ async function run() {
 		await client.connect();
 
 		// Database collections
+		const usersCollection = client.db('navantis_pharma_db').collection('users');
 		const productsCollection = client.db('navantis_pharma_db').collection('products');
 		const categoriesCollection = client.db('navantis_pharma_db').collection('categories');
 		const eventsCollection = client.db('navantis_pharma_db').collection('events');
 		const careersCollection = client.db('navantis_pharma_db').collection('careers');
 		const queriesCollection = client.db('navantis_pharma_db').collection('queries');
 		const applicationsCollection = client.db('navantis_pharma_db').collection('applications');
+
+		// send user(s) data api
+		app.post('/users', async (req, res) => {
+			const user = req.body;
+			const query = { email: user.email };
+			const existingUser = await usersCollection.findOne(query);
+			if (existingUser) {
+				return res.send({ message: "User already exists" })
+			}
+			const result = await usersCollection.insertOne(user);
+			res.send(result);
+		});
 
 		// add a new product api
 		app.post('/products', async (req, res) => {

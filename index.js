@@ -48,6 +48,12 @@ async function run() {
 			res.send(result);
 		});
 
+		// get all user(s) api
+		app.get('/users', async (req, res) => {
+			const result = await usersCollection.find().toArray();
+			res.send(result);
+		});
+
 		// add a new product api
 		app.post('/products', async (req, res) => {
 			const newProduct = req.body;

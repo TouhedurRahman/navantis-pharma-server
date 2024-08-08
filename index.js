@@ -75,6 +75,14 @@ async function run() {
 			res.send(result);
 		});
 
+		// delete user api
+		app.delete('/user/:id', async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: new ObjectId(id) };
+			const result = await usersCollection.deleteOne(query);
+			res.send(result);
+		});
+
 		// add a new product api
 		app.post('/products', async (req, res) => {
 			const newProduct = req.body;

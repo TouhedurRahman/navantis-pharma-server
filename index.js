@@ -62,6 +62,19 @@ async function run() {
 			res.send(result);
 		});
 
+		// update user's role api
+		app.patch('/users/admin/:id', async (req, res) => {
+			const id = req.params.id;
+			const filter = { _id: new ObjectId(id) }
+			const updateDoc = {
+				$set: {
+					role: 'admin'
+				},
+			};
+			const result = await usersCollection.updateOne(filter, updateDoc);
+			res.send(result);
+		});
+
 		// add a new product api
 		app.post('/products', async (req, res) => {
 			const newProduct = req.body;
